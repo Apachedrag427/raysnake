@@ -18,6 +18,7 @@ void Snake::draw() {
 }
 
 void Snake::update() {
+	int pre = dir;
 	if ((IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && last_dir != 3) {
 		dir = 1;
 	} else if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && last_dir != 4) {
@@ -28,7 +29,7 @@ void Snake::update() {
 		dir = 4;
 	}
 	
-	if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_update).count() <= 100) {
+	if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_update).count() <= 100 && pre == dir) {
 		return;
 	}
 	last_update = std::chrono::system_clock::now();
