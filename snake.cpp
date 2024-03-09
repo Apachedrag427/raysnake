@@ -19,13 +19,13 @@ void Snake::draw() {
 
 void Snake::update() {
 	int pre = dir;
-	if ((IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && last_dir != 3) {
+	if ((IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && dir != 3) {
 		dir = 1;
-	} else if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && last_dir != 4) {
+	} else if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && dir != 4) {
 		dir = 2;
-	} else if ((IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) && last_dir != 1) {
+	} else if ((IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) && dir != 1) {
 		dir = 3;
-	} else if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && last_dir != 2) {
+	} else if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && dir != 2) {
 		dir = 4;
 	}
 	
@@ -33,7 +33,6 @@ void Snake::update() {
 		return;
 	}
 	last_update = std::chrono::system_clock::now();
-	last_dir = dir;
 
 	Segment* head = &body[0];
 
