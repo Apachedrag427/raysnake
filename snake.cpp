@@ -17,6 +17,10 @@ void Snake::draw() {
 	}
 }
 
+int ms_since(std::chrono::time_point<std::chrono::system_clock> last_update) {
+	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_update).count();
+}
+
 void Snake::update() {
 	int pre = dir;
 	if ((IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && dir != 3) {
@@ -28,18 +32,23 @@ void Snake::update() {
 	} else if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && dir != 2) {
 		dir = 4;
 	}
+
+
+	int elapsed_ms = ms_since(last_update);
+	bool direction_changed = pre != dir;
 	
-	if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_update).count() <= 100 && pre == dir) {
+	if (elapsed_ms <= 100 && !direction_changed) {
 		return;
 	}
 	last_update = std::chrono::system_clock::now();
 
-	Segment* head = &body[0];
 
 	for (int i = body.size(); i >= 1; i--) {
 		body[i].x = body[i - 1].x;
 		body[i].y = body[i - 1].y;
 	}
+
+	Segment* head = &body[0];
 
 	switch(dir) {
 		case 1:
