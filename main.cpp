@@ -12,7 +12,7 @@ void drawCenteredText(const char* text, int fontSize, Color color) {
 	DrawTextEx(GetFontDefault(), text, position, fontSize, 2, color);
 }
 
-const int FOOD_AMOUNT = 1;
+const int FOOD_AMOUNT = 2;
 
 int main() {
 	InitWindow(GRID_WIDTH, GRID_HEIGHT, "Snake");
