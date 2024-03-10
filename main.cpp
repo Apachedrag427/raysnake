@@ -15,9 +15,9 @@ void drawCenteredText(const char* text, int fontSize, Color color) {
 const int FOOD_AMOUNT = 2;
 
 int main() {
+	SetConfigFlags(FLAG_VSYNC_HINT);
+	
 	InitWindow(GRID_WIDTH, GRID_HEIGHT, "Snake");
-
-	SetTargetFPS(180);
 
 	std::unique_ptr<Snake> snek(new Snake());
 
