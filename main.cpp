@@ -21,8 +21,8 @@ int main() {
 	InitWindow(GRID_WIDTH, GRID_HEIGHT, "Snake");
 
 	Camera2D camera = { 0 };
-	camera.target = (Vector2){ 0.0f, 0.0f};
-	camera.offset = (Vector2){ GRID_WIDTH/2.0f, GRID_HEIGHT/2.0f };
+	camera.target = (Vector2){ 0.0f, 0.0f };
+	camera.offset = (Vector2){ 0.0f, 0.0f };//{ GRID_WIDTH/2.0f, GRID_HEIGHT/2.0f };
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
 
@@ -48,10 +48,10 @@ int main() {
 
 				BeginMode2D(camera);
 
-					// snek->draw();
-					// for (std::unique_ptr<Food>& f : food) {
-					// 	f->draw();
-					// }
+					snek->draw();
+					for (std::unique_ptr<Food>& f : food) {
+						f->draw();
+					}
 
 				EndMode2D();
 

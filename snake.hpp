@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <raylib.h>
 #include <vector>
 #include <chrono>
 
@@ -14,7 +15,10 @@ struct Segment {
 
 class Snake {
 	int dir = 1;
-	int last_dir = 1;
+	bool update_forced;
+
+	int prev_tip_pos_x;
+	int prev_tip_pos_y;
 
 	std::vector<Segment> body;
 	std::chrono::time_point<std::chrono::system_clock> last_update;

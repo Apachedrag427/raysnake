@@ -11,15 +11,36 @@ Snake::Snake() {
 	reset();
 }
 
-void Snake::draw() {
-	for (Segment& segment : body) {
-		DrawRectangle(segment.x * CELL_WIDTH, segment.y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, GREEN);
-	}
-}
 
 int ms_since(std::chrono::time_point<std::chrono::system_clock> last_update) {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_update).count();
 }
+
+
+float lerp(float a, float b, float alpha) {
+	return a + alpha * (b - a);
+}
+
+void Snake::draw() {
+	float progress = ms_since(last_update) / 100.0f;
+	for (int i = 0; i < body.size(); i++) {
+		Segment* segment = &body[i];
+		if (i < body.size() - 1) {
+			DrawRectangleRec({
+				lerp((float)body[i + 1].x * CELL_WIDTH, (float)segment->x * CELL_WIDTH, progress),
+				lerp((float)body[i + 1].y * CELL_WIDTH, (float)segment->y * CELL_WIDTH, progress),
+				CELL_WIDTH, CELL_HEIGHT
+			}, GREEN);
+		} else {
+			DrawRectangleRec({
+				lerp((float)prev_tip_pos_x * CELL_WIDTH, (float)segment->x * CELL_WIDTH, progress),
+				lerp((float)prev_tip_pos_y * CELL_WIDTH, (float)segment->y * CELL_WIDTH, progress),
+				CELL_WIDTH, CELL_HEIGHT
+			}, GREEN);
+		}
+	}
+}
+
 
 void Snake::update() {
 	int pre = dir;
@@ -37,11 +58,13 @@ void Snake::update() {
 	int elapsed_ms = ms_since(last_update);
 	bool direction_changed = pre != dir;
 	
-	if (elapsed_ms <= 100 && !direction_changed) {
+	if (elapsed_ms <= 100 /*&& !direction_changed*/) {
 		return;
 	}
 	last_update = std::chrono::system_clock::now();
 
+	prev_tip_pos_x = body[body.size()-1].x;
+	prev_tip_pos_y = body[body.size()-1].y;
 
 	for (int i = body.size(); i >= 1; i--) {
 		body[i].x = body[i - 1].x;
