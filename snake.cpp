@@ -57,11 +57,24 @@ void Snake::update() {
 
 	int elapsed_ms = ms_since(last_update);
 	bool direction_changed = pre != dir;
+
+	if (direction_changed && elapsed_ms < 75) {
+		for (int i = 0; i < body.size(); i++) {
+			if (i == body.size() - 1) {
+				body[i].x = prev_tip_pos_x;
+				body[i].y = prev_tip_pos_y;
+			} else {
+				body[i].x = body[i+1].x;
+				body[i].y = body[i+1].y;
+			}
+		}
+	}
 	
-	if (elapsed_ms <= 100 /*&& !direction_changed*/) {
+	if (elapsed_ms <= 100 && !direction_changed) {
 		return;
 	}
 	last_update = std::chrono::system_clock::now();
+
 
 	prev_tip_pos_x = body[body.size()-1].x;
 	prev_tip_pos_y = body[body.size()-1].y;
