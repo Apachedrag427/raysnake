@@ -58,7 +58,7 @@ void Snake::update() {
 	int elapsed_ms = ms_since(last_update);
 	bool direction_changed = pre != dir;
 
-	if (direction_changed && elapsed_ms < 75) {
+	if (direction_changed && elapsed_ms < 50) {
 		for (int i = 0; i < body.size(); i++) {
 			if (i == body.size() - 1) {
 				body[i].x = prev_tip_pos_x;
