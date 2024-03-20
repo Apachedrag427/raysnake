@@ -1,16 +1,16 @@
 #include "food.hpp"
 #include "config.hpp"
 
-#include <random>
+#include <vector>
 #include <raylib.h>
 
-Food::Food() : dist(0, GRID_SIZE - 1), gen(rd()) {
+Food::Food() {
 	spawn();
 }
 
 void Food::spawn() {
-	x = dist(gen);
-	y = dist(gen);
+	x = GetRandomValue(0, GRID_SIZE-1);
+	y = GetRandomValue(0, GRID_SIZE-1);
 }
 
 void Food::spawn(std::vector<Segment>& blacklist) {

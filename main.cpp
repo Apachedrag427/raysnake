@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <raylib.h>
+#include <rcamera.h>
 
 const int textSpacing = 2;
 void drawCenteredText(const char* text, int fontSize, Color color) {
@@ -18,6 +19,12 @@ int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	
 	InitWindow(GRID_WIDTH, GRID_HEIGHT, "Snake");
+
+	Camera2D camera = { 0 };
+	camera.target = (Vector2){ 0.0f, 0.0f };
+	camera.offset = (Vector2){ 0.0f, 0.0f };//{ GRID_WIDTH/2.0f, GRID_HEIGHT/2.0f };
+	camera.rotation = 0.0f;
+	camera.zoom = 1.0f;
 
 	std::unique_ptr<Snake> snek(new Snake());
 
@@ -38,10 +45,15 @@ int main() {
 			BeginDrawing();
 
 				ClearBackground(BLACK);
-				snek->draw();
-				for (std::unique_ptr<Food>& f : food) {
-					f->draw();
-				}
+
+				BeginMode2D(camera);
+
+					snek->draw();
+					for (std::unique_ptr<Food>& f : food) {
+						f->draw();
+					}
+
+				EndMode2D();
 
 			EndDrawing();
 		} else {
